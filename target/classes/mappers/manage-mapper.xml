@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="manageMapper">
+<!-- 컬럼명 디비와 일치해야함!! -->
+	<resultMap type="CatProfile" id="resultCatProfile">
+		<id column="user_id" property="user_id" />
+		<result column="cat_name" property="cat_name" />
+		<result column="breed" property="breed" />
+		<result column="age" property="age" />
+		<result column="stature" property="stature" />
+		<result column="weight" property="weight" />
+		<result column="neutering" property="neutering" />
+		<result column="cat_original_img" property="cat_original_img" />
+		<result column="cat_rename_img" property="cat_rename_img" />
+		<result column="repeat_number" property="repeat_number" />
+		<result column="measure_value" property="measure_value" />
+		<result column="measure_date" property="measure_date" />
+	</resultMap>
+
+	<select id="selectAllCatProfile" parameterType="string" resultMap="resultCatProfile">
+		select * from catprofile
+		where user_id = #{ user_id } order by cat_name, repeat_number
+	</select>
+
+	<select id="selectNameCatProfile" parameterType="CatProfile" resultMap="resultCatProfile">
+		select * from catprofile
+		where user_id = #{ user_id } and cat_name = #{ cat_name }
+		order by repeat_number desc
+	</select>
+	
+	<select id="selectOneCatProfile" parameterType="CatProfile" resultType="CatProfile">
+		select * from catprofile
+		where user_id = #{ user_id } and cat_name = #{ cat_name } and repeat_number = #{ repeat_number }
+	</select>
+	
+	<delete id="deleteCatProfile" parameterType="CatProfile">
+		delete from catprofile
+		where user_id = #{ user_id } and cat_name = #{ cat_name } and repeat_number = #{ repeat_number }
+	</delete>
+	
+</mapper>
